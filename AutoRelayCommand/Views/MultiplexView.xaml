@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="AutoRelayCommand.Views.MultiplexView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:AutoRelayCommand.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ViewModels="using:AutoRelayCommand.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400">
+
+    <UserControl.DataContext>
+        <ViewModels:MultiplexViewModel />
+    </UserControl.DataContext>
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <TextBlock Text="Auto Relay Command Example"
+                   Margin="12, 40, 12, 12"
+                   FontSize="32"
+                   TextWrapping="Wrap" />
+
+        <TextBlock Text="The purpose of this application is to demonstrate a method for automatically activating CanExecute in ICommand.  This automatically triggers buttons to become enabled / disabled based on various binding properties at once."
+                   Margin="12"
+                   TextWrapping="Wrap" />
+
+        <TextBlock Text="The name of the multiplex can only be set once if it starts with the @ symbol and the multiplex is not active."
+                   Margin="12"
+                   TextWrapping="Wrap" />
+
+        <TextBlock Text="The multiplex is started when the name is being properly set.  At that time the multiplex cannot be altered... once it is set it cannot be reset until it has been stopped."
+                   Margin="12"
+                   TextWrapping="Wrap" />
+
+        <TextBlock Text="There is no code behind, triggers, converters, or other tricks used to make this work.  This is purely binding to the commands in the ViewModel.  The magic is in the RelayCommand and RelayCommandBindings in the ViewModels namespace."
+                   Margin="12"
+                   TextWrapping="Wrap" />
+
+        <TextBox Name="TextBoxName"
+                 Text="{Binding Name, Mode=OneWay}"
+                 Margin="12" />
+
+        <Button Content="Set New Name"
+                Margin="12"
+                Command="{Binding SetNewNameCommand}"
+                CommandParameter="{Binding Text, ElementName=TextBoxName}" />
+
+        <Button Content="Stop Multiplex"
+                Margin="12"
+                Command="{Binding StopMultiplexCommand}" />
+
+        <StackPanel Margin="12">
+            <TextBlock Text="Multiplex Changing" />
+            <TextBlock Text="{Binding IsActiveChanging}" />
+        </StackPanel>
+
+        <StackPanel Margin="12">
+            <TextBlock Text="Multiplex Active" />
+            <TextBlock Text="{Binding IsActive}" />
+        </StackPanel>
+
+        <StackPanel Margin="12">
+            <TextBlock Text="Multiplex Name" />
+            <TextBlock Text="{Binding Name}" />
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>
